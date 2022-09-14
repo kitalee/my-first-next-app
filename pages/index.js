@@ -1,4 +1,5 @@
 import MeetupList from "../components/meetups/MeetupList";
+import { useState, useEffect } from "react";
 
 const DUMMY_MEETUPS = [
   {
@@ -28,7 +29,20 @@ const DUMMY_MEETUPS = [
 ];
 
 const HomePage = () => {
-  return <MeetupList meetups={DUMMY_MEETUPS} />;
+  console.log('rendering');
+  const [loadedMeetups, setLoadedMeetups] = useState([]);
+
+  useEffect(() => {
+    // send a http request and fetch data
+    setLoadedMeetups(DUMMY_MEETUPS);
+    console.log('useEffect!');
+  }, []);
+
+  // Can't see the real data as it is second cycle rendering, because NextJS do not wait the second cycle for pre-rendering pages
+  return <MeetupList meetups={loadedMeetups} />;
+
+  // Can see the real data as it is first cycle rendering
+  //return <MeetupList meetups={DUMMY_MEETUPS} />;
 };
 
 export default HomePage;
